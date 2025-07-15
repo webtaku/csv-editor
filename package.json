@@ -1,0 +1,80 @@
+{
+  "name": "webtaku-csv-editor",
+  "displayName": "Webtaku's CSV Editor",
+  "description": "A simple VS Code extension that lets you view and edit CSV files in a spreadsheet-like table directly inside the editor.",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.102.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "Webtaku",
+    "CSV"
+  ],
+  "activationEvents": [
+    "onLanguage:csv",
+    "onWebviewEditor:webtaku-csv.editor"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "csv",
+        "aliases": [
+          "CSV"
+        ],
+        "extensions": [
+          ".csv"
+        ]
+      }
+    ],
+    "customEditors": [
+      {
+        "viewType": "webtaku-csv.editor",
+        "displayName": "Webtaku CSV Editor",
+        "selector": [
+          {
+            "filenamePattern": "*.csv"
+          }
+        ]
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "yarn run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "yarn run compile-tests && yarn run compile && yarn run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^24.0.13",
+    "@types/papaparse": "^5.3.16",
+    "@types/tabulator-tables": "^6.2.7",
+    "@types/vscode": "^1.102.0",
+    "@typescript-eslint/eslint-plugin": "^8.31.1",
+    "@typescript-eslint/parser": "^8.31.1",
+    "@vscode/test-cli": "^0.0.11",
+    "@vscode/test-electron": "^2.5.2",
+    "css-loader": "^7.1.2",
+    "eslint": "^9.25.1",
+    "style-loader": "^4.0.0",
+    "ts-loader": "^9.5.2",
+    "typescript": "^5.8.3",
+    "webpack": "^5.99.7",
+    "webpack-cli": "^6.0.1"
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",
+  "dependencies": {
+    "@webtaku/el": "^0.0.3",
+    "papaparse": "^5.5.3",
+    "tabulator-tables": "^6.3.1"
+  }
+}
