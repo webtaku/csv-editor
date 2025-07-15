@@ -1,7 +1,7 @@
 import { el } from '@webtaku/el';
+import * as Papa from 'papaparse';
 import { ColumnDefinition, EditModule, Tabulator } from 'tabulator-tables';
 import 'tabulator-tables/dist/css/tabulator.min.css';
-import Papa from 'papaparse';
 
 Tabulator.registerModule([EditModule]);
 
