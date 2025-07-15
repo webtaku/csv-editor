@@ -2,7 +2,7 @@
   "name": "webtaku-csv-editor",
   "displayName": "Webtaku's CSV Editor",
   "description": "A simple VS Code extension that lets you view and edit CSV files in a spreadsheet-like table directly inside the editor.",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "repository": {
     "type": "git",
     "url": "https://github.com/webtaku/csv-editor.git"
@@ -10,7 +10,7 @@
   "publisher": "webtaku",
   "license": "(MIT OR Apache-2.0)",
   "engines": {
-    "vscode": "^1.102.0"
+    "vscode": "^1.99.3"
   },
   "categories": [
     "Other"
@@ -64,7 +64,7 @@
     "@types/node": "^24.0.13",
     "@types/papaparse": "^5.3.16",
     "@types/tabulator-tables": "^6.2.7",
-    "@types/vscode": "^1.102.0",
+    "@types/vscode": "^1.99.3",
     "@typescript-eslint/eslint-plugin": "^8.31.1",
     "@typescript-eslint/parser": "^8.31.1",
     "@vscode/test-cli": "^0.0.11",
