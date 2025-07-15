@@ -15,14 +15,26 @@ const vscode = acquireVsCodeApi();
 const container = el();
 const table = new Tabulator(container);
 
-table.on('cellEdited', () => table.redraw(true))
+function sendEdit() {
+  const data = table.getData();
+  const csv = Papa.unparse(data);
+  vscode.postMessage({ type: 'edit', data: csv });
+}
+
+table.on('cellEdited', () => {
+  table.redraw(true);
+  sendEdit();
+})
 
 document.body.append(container, el('button', 'Add Row', {
   style: {
     position: 'fixed',
     bottom: '0',
   },
-  onclick: () => table.addRow(),
+  onclick: async () => {
+    await table.addRow();
+    sendEdit();
+  },
 }));
 
 window.addEventListener('message', (event) => {
@@ -42,9 +54,7 @@ window.addEventListener('message', (event) => {
 document.addEventListener('keydown', (e) => {
   if ((e.ctrlKey || e.metaKey) && e.key === 's') {
     e.preventDefault();
-    const data = table.getData();
-    const csv = Papa.unparse(data);
-    vscode.postMessage({ type: 'save', data: csv });
+    vscode.postMessage({ type: 'save' });
   }
 });
 

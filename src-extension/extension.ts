@@ -32,7 +32,7 @@ class WebtakuCsvEditorProvider implements vscode.CustomTextEditorProvider {
 				webviewPanel.webview.postMessage({ type: 'csv-data', data: document.getText().trim() });
 			}
 
-			if (message.type === 'save') {
+			if (message.type === 'edit') {
 				const edit = new vscode.WorkspaceEdit();
 				const fullRange = new vscode.Range(
 					0, 0,
@@ -41,6 +41,9 @@ class WebtakuCsvEditorProvider implements vscode.CustomTextEditorProvider {
 				);
 				edit.replace(document.uri, fullRange, message.data);
 				await vscode.workspace.applyEdit(edit);
+			}
+
+			if (message.type === 'save') {
 				await document.save();
 			}
 		});
