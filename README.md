@@ -26,7 +26,7 @@ A simple VS Code extension that lets you view and edit CSV files in a spreadshee
 Alternatively, install via CLI:
 
 ```bash
-code --install-extension webtaku-csv-editor
+code --install-extension webtaku.webtaku-csv-editor
 ```
 
 ---
