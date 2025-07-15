@@ -27,12 +27,21 @@ class WebtakuCsvEditorProvider implements vscode.CustomTextEditorProvider {
 
 		this.updateWebview(webviewPanel);
 
+		let isApplyingEdit = false;
+
+		const updateWebviewData = () => {
+			if (!isApplyingEdit) {
+				webviewPanel.webview.postMessage({ type: 'csv-data', data: document.getText().trim() });
+			}
+		};
+
 		webviewPanel.webview.onDidReceiveMessage(async (message) => {
 			if (message.type === 'ready') {
-				webviewPanel.webview.postMessage({ type: 'csv-data', data: document.getText().trim() });
+				updateWebviewData();
 			}
 
 			if (message.type === 'edit') {
+				isApplyingEdit = true;
 				const edit = new vscode.WorkspaceEdit();
 				const fullRange = new vscode.Range(
 					0, 0,
@@ -41,11 +50,26 @@ class WebtakuCsvEditorProvider implements vscode.CustomTextEditorProvider {
 				);
 				edit.replace(document.uri, fullRange, message.data);
 				await vscode.workspace.applyEdit(edit);
+				isApplyingEdit = false;
 			}
 
 			if (message.type === 'save') {
 				await document.save();
 			}
+
+			if (message.type === 'open-text-editor') {
+				await vscode.commands.executeCommand('vscode.openWith', document.uri, 'default');
+			}
+		});
+
+		const changeDocSub = vscode.workspace.onDidChangeTextDocument(e => {
+			if (e.document.uri.toString() === document.uri.toString()) {
+				updateWebviewData();
+			}
+		});
+
+		webviewPanel.onDidDispose(() => {
+			changeDocSub.dispose();
 		});
 	}
 

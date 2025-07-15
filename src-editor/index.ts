@@ -26,16 +26,22 @@ table.on('cellEdited', () => {
   sendEdit();
 })
 
-document.body.append(container, el('button', 'Add Row', {
-  style: {
-    position: 'fixed',
-    bottom: '0',
-  },
-  onclick: async () => {
-    await table.addRow();
-    sendEdit();
-  },
-}));
+document.body.append(
+  container,
+  el('button', 'Add Row', {
+    style: { position: 'fixed', bottom: '0', left: '0' },
+    onclick: async () => {
+      await table.addRow();
+      sendEdit();
+    }
+  }),
+  el('button', 'Open Text Editor', {
+    style: { position: 'fixed', bottom: '0', right: '0' },
+    onclick: () => {
+      vscode.postMessage({ type: 'open-text-editor' });
+    }
+  })
+);
 
 window.addEventListener('message', (event) => {
   const msg = event.data;
